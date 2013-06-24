@@ -9,9 +9,14 @@ import org.neo4j.kernel.EmbeddedGraphDatabase;
 
 public class Launcher {
 	
-	private static enum RelTypes implements RelationshipType
+	public static enum RelTypes implements RelationshipType
 	{
-	    HAS_SUBFOLDER, HAS_COURSE,HAS_QUESTION,HAS_EXERCISE
+	    HAS_SUBFOLDER, HAS_COURSE, HAS_QUESTION, HAS_EXERCISE
+	}
+	
+	public static enum NodeTypes implements RelationshipType
+	{
+	    ROOT, FOLDER, COURSE, QUESTION, EXERCISE
 	}
 	
 	public static void main (String...args) {
@@ -26,6 +31,7 @@ public class Launcher {
 		registerShutdownHook( graphDb );
 		System.out.println(graphDb);
 		
+		//Création des nodes
 		Transaction tx = graphDb.beginTx();
 		try
 		{
