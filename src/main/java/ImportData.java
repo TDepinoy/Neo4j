@@ -33,7 +33,7 @@ public class ImportData {
 				Launcher.RelTypes type = getRelTypes(f);
 				Relationship relationship = nodeParent.createRelationshipTo( node, type);
 				System.out.println(relationship);
-				if(type == Launcher.RelTypes.HAS_SUBFOLDER){
+				if(type == Launcher.RelTypes.HAS_SUBFOLDER || type == Launcher.RelTypes.HAS_COURSE){
 					parcoursFolder(f, node, graph);
 				}
 			}

@@ -4,6 +4,7 @@ import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.RelationshipType;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
+import org.neo4j.graphdb.factory.GraphDatabaseSettings;
 import org.neo4j.kernel.EmbeddedGraphDatabase;
 
 
@@ -32,7 +33,12 @@ public class Launcher {
 		EmbeddedGraphDatabase graphDb;
 		
 		//Creation graphe
-		graphDb = (EmbeddedGraphDatabase) new GraphDatabaseFactory().newEmbeddedDatabase(args[0]);
+		graphDb=(EmbeddedGraphDatabase) new GraphDatabaseFactory().
+	    newEmbeddedDatabaseBuilder(args[0]).
+	    setConfig( GraphDatabaseSettings.node_keys_indexable, "name" ).
+	    setConfig( GraphDatabaseSettings.node_auto_indexing, "true" ).
+	    newGraphDatabase();
+		//graphDb = (EmbeddedGraphDatabase) new GraphDatabaseFactory().newEmbeddedDatabase(args[0]);
 		registerShutdownHook( graphDb );
 		System.out.println(graphDb);
 		
