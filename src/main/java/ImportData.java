@@ -1,4 +1,6 @@
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,8 +38,16 @@ public class ImportData {
 				if(type == Launcher.RelTypes.HAS_SUBFOLDER || type == Launcher.RelTypes.HAS_COURSE){
 					parcoursFolder(f, node, graph);
 				}
+			} else if(f.isFile()) {
+				this.addResource(nodeParent, f);
 			}
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void addResource(Node nodeParent, File file){
+		List<String> resources = (List<String>) nodeParent.getProperty("resources", new ArrayList<String>());
+		resources.add(file.getName());
 	}
 	
 	private Launcher.RelTypes getRelTypes(File file){

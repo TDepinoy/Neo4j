@@ -15,7 +15,7 @@ public class Launcher {
 	    HAS_SUBFOLDER, HAS_COURSE, HAS_QUESTION, HAS_EXERCISE
 	}
 	
-	public static enum NodeTypes implements RelationshipType
+	public static enum NodeTypes
 	{
 	    ROOT("root"), FOLDER("folder"), COURSE("course"), QUESTION("question"), EXERCISE("exercise");
 	    
@@ -38,7 +38,6 @@ public class Launcher {
 	    setConfig( GraphDatabaseSettings.node_keys_indexable, "name" ).
 	    setConfig( GraphDatabaseSettings.node_auto_indexing, "true" ).
 	    newGraphDatabase();
-		//graphDb = (EmbeddedGraphDatabase) new GraphDatabaseFactory().newEmbeddedDatabase(args[0]);
 		registerShutdownHook( graphDb );
 		System.out.println(graphDb);
 		
