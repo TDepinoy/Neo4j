@@ -1,5 +1,6 @@
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,9 +36,7 @@ public class ImportData {
 				Launcher.RelTypes type = getRelTypes(f);
 				Relationship relationship = nodeParent.createRelationshipTo( node, type);
 				System.out.println(relationship);
-				if(type == Launcher.RelTypes.HAS_SUBFOLDER || type == Launcher.RelTypes.HAS_COURSE){
-					parcoursFolder(f, node, graph);
-				}
+				parcoursFolder(f, node, graph);
 			} else if(f.isFile()) {
 				this.addResource(nodeParent, f);
 			}
@@ -46,8 +45,19 @@ public class ImportData {
 	
 	@SuppressWarnings("unchecked")
 	private void addResource(Node nodeParent, File file){
-		List<String> resources = (List<String>) nodeParent.getProperty("resources", new ArrayList<String>());
-		resources.add(file.getName());
+		String[] resources = (String[]) nodeParent.getProperty("resources",null);
+		List<String> resourcesList = new ArrayList<String>();
+		if(resources!=null) {
+			List<String> list = Arrays.asList(resources);
+			resourcesList.addAll(list);
+		}
+		
+		resourcesList.add(file.getName());
+		String [] strings = new String[resourcesList.size()];
+		for(int i=0;i<resourcesList.size();i++){
+			strings[i]=resourcesList.get(i);
+		}
+		nodeParent.setProperty("resources", strings);
 	}
 	
 	private Launcher.RelTypes getRelTypes(File file){
